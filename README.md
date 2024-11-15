@@ -34,14 +34,14 @@
 
 ```bash
 # Clone repositori ini
-git clone https://github.com/username/sipit.git
+git clone https://github.com/username/E-Book_SIPIT.git
 
 # Buka proyek di IDE
 cd sipit
 
 # Buat database di MySQL
 # Jalankan script berikut untuk membuat database dan tabel:
-source database/sipit.sql
+source database/Script.sql
 
 # Jalankan aplikasi
 # Pastikan mengonfigurasi file koneksi database di aplikasi
