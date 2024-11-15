@@ -53,12 +53,12 @@ source database/sipit.sql
 sipit/
 ├── controller/
 │   ├── bookmarkController/
-|   └── ratingUlasanController/ 
+│   └── ratingUlasanController/ 
 ├── src/
 │   ├── controller/
 │   └── view/         # Menggunakan Java Swing
 ├── database/
-│   └── sipit.sql
+│   └── Script.sql
 ├── README.md
 └── LICENSE
 ```
