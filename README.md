@@ -7,7 +7,7 @@
 <h2>✨ Fitur Utama</h2>
 <ul>
   <li>🔖 <b>Bookmark</b>: Tandai halaman penting dan akses kembali dengan mudah.</li>
-  <li>🔍 <b>Pencarian Pintar</b>: Temukan buku berdasarkan judul, penulis, atau kata kunci.</li>
+  <li>🔍 <b>Pencarian Pintar</b>: Temukan buku berdasarkan judul buku.</li>
   <li>🤖 <b>Rekomendasi Buku</b>: Dapatkan rekomendasi buku yang sesuai dengan minat dan riwayat bacaan Anda.</li>
   <li>⭐ <b>Rating dan Ulasan</b>: Berikan penilaian dan ulasan pada buku yang telah dibaca.</li>
 </ul>
