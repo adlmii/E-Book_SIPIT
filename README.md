@@ -51,10 +51,11 @@ source database/sipit.sql
 
 ```bash
 sipit/
+├── controller/
+│   ├── bookmarkController/
+|   └── ratingUlasanController/ 
 ├── src/
-│   ├── main/
 │   ├── controller/
-│   ├── model/
 │   └── view/         # Menggunakan Java Swing
 ├── database/
 │   └── sipit.sql
