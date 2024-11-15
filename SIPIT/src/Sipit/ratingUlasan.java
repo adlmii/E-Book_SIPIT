@@ -36,12 +36,12 @@ public class ratingUlasan extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery();
             
             while (rs.next()) {
-                String username = rs.getString("username");
+                String id = rs.getString("id");
                 String judulBuku= rs.getString("judulBuku");
                 int rating      = rs.getInt("rating");
                 String ulasan   = rs.getString("ulasan");
                 
-                Object[] rowData = {username,judulBuku,rating,ulasan};
+                Object[] rowData = {id,judulBuku,rating,ulasan};
                 model.addRow(rowData);
             }
             
