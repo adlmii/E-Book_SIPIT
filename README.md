@@ -55,7 +55,8 @@ sipit/
 │   ├── config/
 │   └── controller/
 │   └── img/
-│   └── Sipit/         # Menggunakan Java Swing
+│   └── Model/
+│   └── View/         # Menggunakan Java Swing
 ├── database/
 │   └── Script.sql
 ├── README.md
