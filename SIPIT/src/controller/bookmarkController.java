@@ -59,4 +59,46 @@ public class bookmarkController {
             return false;
         }
     }
+
+
+    // Testing
+    public boolean addBookmarkTest(String username, String judulBuku, String author) {
+        String sql = "INSERT INTO bookmarkTest (username, judulBuku, author) VALUES (?, ?, ?)";
+        try (PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, username);
+            st.setString(2, judulBuku);
+            st.setString(3, author);
+            return st.executeUpdate() > 0;
+        } catch (Exception e) {
+            Logger.getLogger(bookmarkController.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
+
+    public boolean updateBookmarkTest(String id, String halaman) {
+        String sql = "UPDATE bookmarkTest SET halaman=? WHERE id=?";
+        try (PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, halaman);
+            st.setString(2, id);
+
+            int rowUpdated = st.executeUpdate();
+            return rowUpdated > 0;
+        } catch (Exception e) {
+            Logger.getLogger(bookmarkController.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
+
+    public boolean deleteBookmarkTest(String id) {
+        String sql = "DELETE FROM bookmarkTest WHERE id=?";
+        try (PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, id);
+
+            int rowDeleted = st.executeUpdate();
+            return rowDeleted > 0;
+        } catch (Exception e) {
+            Logger.getLogger(bookmarkController.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
 }

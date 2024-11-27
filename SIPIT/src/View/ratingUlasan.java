@@ -284,9 +284,26 @@ public class ratingUlasan extends javax.swing.JFrame {
         String ulasan = t_ulasan.getText();
         String rating = t_rating.getText();
 
-        if (judulBuku.isEmpty() || rating.isEmpty() || ulasan.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Semua Kolom Harus diisi !", "Validasi", JOptionPane.ERROR_MESSAGE);
+
+        // Validasi
+        if (ulasan.isEmpty() && rating.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Minimal salah satu kolom (Rating atau Ulasan) harus diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+
+        // Validasi Rating
+        if (!rating.isEmpty()) {
+            try {
+                int intRating = Integer.parseInt(rating); // Konversi rating ke int
+                if (intRating < 1 || intRating > 5) {
+                    JOptionPane.showMessageDialog(this, "Rating harus bernilai antara 1 hingga 5!", "Validasi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                // Jika rating bukan angka valid
+                JOptionPane.showMessageDialog(this, "Rating harus berupa angka 1-5", "Validasi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
         ratingUlasanController controller = new ratingUlasanController(conn);
@@ -306,11 +323,34 @@ public class ratingUlasan extends javax.swing.JFrame {
         String ulasan = t_ulasan.getText();
         String rating = t_rating.getText();
 
-        if (judulBuku.isEmpty() || ulasan.isEmpty() || rating.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Semua Kolom Harus diisi !", "Validasi", JOptionPane.ERROR_MESSAGE);
+
+        // Validasi
+        if (judulBuku.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Kolom Judul Buku harus diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Mengecek apakah salah satu dari ulasan atau rating sudah diisi
+        if (ulasan.isEmpty() && rating.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Minimal salah satu kolom (Rating atau Ulasan) harus diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Validasi Rating 1-5
+        if (!rating.isEmpty()) {
+            try {
+                int intRating = Integer.parseInt(rating); // Konversi rating ke int
+                if (intRating < 1 || intRating > 5) {
+                    JOptionPane.showMessageDialog(this, "Rating harus bernilai antara 1 hingga 5!", "Validasi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                // Jika rating bukan angka valid
+                JOptionPane.showMessageDialog(this, "Rating harus berupa angka 1-5", "Validasi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
         ratingUlasanController controller = new ratingUlasanController(conn);
         boolean isAdded = controller.addRatingUlasan(Session.username, judulBuku, rating, ulasan);
 
