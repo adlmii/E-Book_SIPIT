@@ -7,6 +7,7 @@ package View;
 import View.login;
 import Config.koneksi;
 import View.ratingUlasan;
+import controller.userController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -180,30 +181,22 @@ public class register extends javax.swing.JFrame {
         String nama = t_nama.getText();
         String username = t_username.getText();
         String password = t_password.getText();
-        
-        if(nama.isEmpty() || username.isEmpty() || password.isEmpty() || nama.equals("username") || password.equals("password") || nama.equals("nama")) {
-            JOptionPane.showMessageDialog(this, "Semua Kolom Harus diisi !", "Validasi", JOptionPane.ERROR_MESSAGE);
+
+        if (nama.isEmpty() || username.isEmpty() || password.isEmpty() || nama.equals("nama") || username.equals("username") || password.equals("password")) {
+            JOptionPane.showMessageDialog(this, "Semua Kolom Harus diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        try {
-            String sql = "INSERT INTO pengguna (nama, username, password) VALUES (?,?,?)";
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, nama);
-            st.setString(2, username);
-            st.setString(3, password);
-            
-            int rowInserted = st.executeUpdate();
-            if(rowInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Akun berhasil dibuat");
-                login login = new login();
-                login.setVisible(true);
-                this.dispose();
-            }
-            
-            st.close();
-        } catch (Exception e) {
-            Logger.getLogger(ratingUlasan.class.getName()).log(Level.SEVERE,null,e);
+
+        // Membuat instance userController
+        userController userCtrl = new userController(conn); // Pastikan 'conn' adalah koneksi database yang valid
+
+        if (userCtrl.register(nama, username, password)) {
+            JOptionPane.showMessageDialog(this, "Akun berhasil dibuat!");
+            login login = new login();
+            login.setVisible(true);
+            this.dispose();
+        } else {
+        JOptionPane.showMessageDialog(this, "Gagal membuat akun. Silakan coba lagi.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_registerActionPerformed
 

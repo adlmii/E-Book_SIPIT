@@ -8,6 +8,7 @@ import Config.koneksi;
 import View.Menu;
 import Model.Session;
 import View.ratingUlasan;
+import controller.userController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -183,38 +184,24 @@ public class login extends javax.swing.JFrame {
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         String username = t_username.getText();
         String password = t_password.getText();
-        
-        if(username.isEmpty() || password.isEmpty() || username.equals("username") || password.equals("password")) {
+
+        if (username.isEmpty() || password.isEmpty() || username.equals("username") || password.equals("password")) {
             JOptionPane.showMessageDialog(this, "Username atau Password tidak boleh kosong!", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if (authenticate(username, password)) {
-//            JOptionPane.showMessageDialog(this, "Login berhasil!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            Session.username = username;
-            Menu menu = new Menu(); // Mengarahkan ke frame Menu
+        // Membuat instance userController
+        userController userCtrl = new userController(conn); // Pastikan 'conn' adalah koneksi database yang valid
+
+        if (userCtrl.authenticate(username, password)) {
+            Session.username = username; // Simpan username ke dalam sesi
+            Menu menu = new Menu(); // Membuka frame Menu
             menu.setVisible(true);
             this.dispose(); // Menutup frame login
         } else {
             JOptionPane.showMessageDialog(this, "Username atau password salah.", "Login Gagal", JOptionPane.ERROR_MESSAGE);
-        } 
+    }
     }//GEN-LAST:event_btn_loginActionPerformed
-
-        private boolean authenticate(String username, String password) {
-
-        try{
-            String query = "SELECT * FROM pengguna WHERE username = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
-            
-            return rs.next();
-        } catch (Exception e) {
-            Logger.getLogger(ratingUlasan.class.getName()).log(Level.SEVERE,null,e);
-            return false;
-        }
-      }
+   
     
     private void t_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_passwordActionPerformed
 
