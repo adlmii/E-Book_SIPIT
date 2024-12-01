@@ -278,20 +278,25 @@ public class ratingUlasan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Pilih Baris yang ingin diubah");
             return;
         }
-
+    
         String id = tbl_data.getValueAt(selectedRow, 0).toString();
         String judulBuku = t_judulBuku.getText();
         String ulasan = t_ulasan.getText();
         String rating = t_rating.getText();
-
-
+    
         // Validasi
+        if (judulBuku.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Kolom Judul Buku harus diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        // Mengecek apakah salah satu dari ulasan atau rating sudah diisi
         if (ulasan.isEmpty() && rating.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Minimal salah satu kolom (Rating atau Ulasan) harus diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        // Validasi Rating
+    
+        // Validasi Rating 1-5
         if (!rating.isEmpty()) {
             try {
                 int intRating = Integer.parseInt(rating); // Konversi rating ke int
@@ -305,16 +310,20 @@ public class ratingUlasan extends javax.swing.JFrame {
                 return;
             }
         }
-
+    
+        // Menggunakan controller untuk melakukan update rating/ulasan
         ratingUlasanController controller = new ratingUlasanController(conn);
+    
+        // Cek apakah ada perubahan sebelum melakukan update
         boolean isUpdated = controller.updateRatingUlasan(id, judulBuku, rating, ulasan);
-
+    
+        // Menangani hasil update
         if (isUpdated) {
             JOptionPane.showMessageDialog(this, "Data Berhasil diperbarui");
             resetForm();
-            getData();
+            getData();  // Refresh data
         } else {
-            JOptionPane.showMessageDialog(this, "Data Gagal diperbarui", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Tidak ada perubahan data atau gagal diperbarui", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_perbaruiActionPerformed
 
@@ -352,6 +361,15 @@ public class ratingUlasan extends javax.swing.JFrame {
         }
         
         ratingUlasanController controller = new ratingUlasanController(conn);
+            // Mengecek duplikasi sebelum menambahkan
+        if (controller.isDuplicate(Session.username, judulBuku)) {
+            t_judulBuku.setText("");
+            t_rating.setText("");
+            t_ulasan.setText("");
+            JOptionPane.showMessageDialog(this, "Ulasan untuk buku ini sudah ada. Tidak bisa ditambahkan lagi.", "Duplikasi", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+
         boolean isAdded = controller.addRatingUlasan(Session.username, judulBuku, rating, ulasan);
 
         if (isAdded) {
