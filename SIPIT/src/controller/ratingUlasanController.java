@@ -161,7 +161,7 @@ public class ratingUlasanController {
         }
 
         // Jika ada perubahan, lakukan update
-        String sql = "UPDATE ratingUlasan SET judulBuku=?, rating=?, ulasan=? WHERE id=?";
+        String sql = "UPDATE ratingUlasanTest SET judulBuku=?, rating=?, ulasan=? WHERE id=?";
         try (PreparedStatement st = conn.prepareStatement(sql)) {
             st.setString(1, judulBuku);
             st.setString(2, rating);
