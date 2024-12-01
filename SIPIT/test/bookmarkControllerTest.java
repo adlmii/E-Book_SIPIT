@@ -141,31 +141,6 @@ public class bookmarkControllerTest {
     }
 
     @Test
-    public void testUpdateBookmarkNoChange() throws Exception {
-        // Menambahkan data awal ke tabel untuk pengujian
-        try (Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("INSERT INTO bookmarkTest (id, username, judulBuku, author, halaman) " +
-                            "VALUES ('1', 'testUser', 'Test Book', 'Author A', '1')");
-        }
-
-        // Mencoba untuk memperbarui halaman dengan nilai yang sama (tidak ada perubahan)
-        boolean isUpdated = controller.updateBookmarkTest("1", "1");
-
-        // Verifikasi bahwa update gagal karena tidak ada perubahan
-        assertFalse("Tidak ada perubahan, jadi bookmark tidak boleh diperbarui", isUpdated);
-
-        // Memeriksa apakah data halaman di database tetap sama
-        try (Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT halaman FROM bookmarkTest WHERE id='1'")) {
-            if (rs.next()) {
-                String halaman = rs.getString("halaman");
-                assertEquals("Halaman harus tetap '1' karena tidak ada perubahan", "1", halaman);
-            }
-        }
-    }
-
-
-    @Test
     public void testDeleteBookmark() throws Exception {
         // Menambahkan data awal
         controller.addBookmarkTest("testUser", "Test Book", "Test Author");

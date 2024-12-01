@@ -41,31 +41,12 @@ public class bookmarkController {
         }
     }
     
-    public boolean updateBookmark(String id, String halaman) {
-        // Cek apakah halaman sudah sama dengan yang ada di database
-        String checkQuery = "SELECT halaman FROM bookmark WHERE id=?";
-        try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
-            checkStmt.setString(1, id);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next()) {
-                    String existingHalaman = rs.getString("halaman");
-                    // Jika halaman sama, tidak perlu melakukan update
-                    if (existingHalaman.equals(halaman)) {
-                        System.out.println("Tidak ada perubahan pada halaman.");
-                        return false; // Tidak ada perubahan
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
+    public boolean updateBookmark(String id, String halaman) {  
         String sql = "UPDATE bookmark SET halaman=? WHERE id=?";
         try (PreparedStatement st = conn.prepareStatement(sql)) {
             st.setString(1, halaman);
             st.setString(2, id);
-
+    
             int rowUpdated = st.executeUpdate();
             return rowUpdated > 0;
         } catch (Exception e) {
@@ -73,6 +54,7 @@ public class bookmarkController {
             return false;
         }
     }
+    
     
     public boolean deleteBookmark(String id) {
         String sql = "DELETE FROM bookmark WHERE id=?";
@@ -124,26 +106,6 @@ public class bookmarkController {
     }
 
     public boolean updateBookmarkTest(String id, String halaman) {
-
-        // Cek apakah halaman sudah sama dengan yang ada di database
-        String checkQuery = "SELECT halaman FROM bookmarkTest WHERE id=?";
-        try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
-            checkStmt.setString(1, id);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next()) {
-                    String existingHalaman = rs.getString("halaman");
-                    // Jika halaman sama, tidak perlu melakukan update
-                    if (existingHalaman.equals(halaman)) {
-                        System.out.println("Tidak ada perubahan pada halaman.");
-                        return false; // Tidak ada perubahan
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
         String sql = "UPDATE bookmarkTest SET halaman=? WHERE id=?";
         try (PreparedStatement st = conn.prepareStatement(sql)) {
             st.setString(1, halaman);
